@@ -8,12 +8,17 @@ $db = $database->getConnection();
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if ($method == 'GET') {
-    $sql = "SELECT * FROM recetas";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($users);
-} else {
-    echo json_encode(['mensaje' => 'Método no soportado']);
+try {
+	if ( $method == 'GET' ) {
+		$sql  = "SELECT * FROM recetas";
+		$stmt = $db->prepare( $sql );
+		$stmt->execute();
+		$users = $stmt->fetchAll( PDO::FETCH_ASSOC );
+		echo json_encode( $users );
+	}
+	else {
+		echo json_encode( [ 'mensaje' => 'Método no soportado' ] );
+	}
+} catch ( Exception $e ) {
+	echo json_encode( [ 'mensaje' => 'Algo no ha salido bien...' ] );
 }
