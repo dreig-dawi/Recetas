@@ -14,9 +14,9 @@ if ($method == 'DELETE') {
   $stmt = $db->prepare($sql);
   $stmt->bindParam(':plato', $id);
   if($stmt->execute()) {
-	  echo json_encode(['mensaje' => 'Usurious eliminado']);
+	  echo json_encode(['mensaje' => 'Receta eliminada']);
   } else {
-	  echo json_encode(['mensaje' => 'Error al eliminar usuario']);
+	  echo json_encode(['mensaje' => 'Error al eliminar la receta']);
   }
 } else {
 	echo json_encode(['mensaje' => 'Método no soportado']);
