@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recetas API</title>
+</head>
+<body>
+    <h1>Recetas API</h1>
+
+    <h2>Actualizar Receta</h2>
+    <form id="updateForm">
+        <input type="text" name="Plato" placeholder="Nuevo Nombre del Plato" required>
+        <input type="text" name="Ingredientes" placeholder="Ingredientes" required>
+        <input type="text" name="Pasos" placeholder="Pasos" required>
+        <input type="text" name="Original" placeholder="Nombre Original del Plato" required>
+        <button type="submit">Actualizar</button>
+    </form>
+
+    <h2>Eliminar Receta</h2>
+    <form id="deleteForm">
+        <input type="text" name="Plato" placeholder="Nombre del Plato" required>
+        <button type="submit">Eliminar</button>
+    </form>
+
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('update.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.mensaje))
+            .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('deleteForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('delete.php', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.mensaje))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
